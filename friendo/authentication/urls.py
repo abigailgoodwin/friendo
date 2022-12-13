@@ -5,5 +5,6 @@ import authentication.views as auth_views
 app_name = 'authentication'
 
 urlpatterns = [
-    path('register/', auth_views.register, name="register")
+    path('register/', auth_views.register, name="register"),
+    path('login/', auth_views.login, name="login")
 ]
