@@ -30,7 +30,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthday = models.DateField()
     age = models.PositiveSmallIntegerField()
-    
+    first_visit = models.BooleanField(default=True)
     
     def __str__(self):
         return self.user.username
