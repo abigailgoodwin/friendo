@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError # Used to throw form errors.
 from datetime import date # Used for date comparisons.
 
 # Local Imports
-from authentication.models import Profile
+from my_profile.models import Profile
 
 class LoginForm(AuthenticationForm):
     '''The form that users use to log in to the site.'''
@@ -19,9 +19,8 @@ class LoginForm(AuthenticationForm):
         for field in self.fields.values() :
             field.widget.attrs["class"] = "form-control"
         self.fields['username'].widget.attrs.update({'id': 'username'})
-        self.fields['username'].label = 'Email'
         self.fields['password'].widget.attrs.update({'id': 'password'})
-        
+
     class Meta:
         model = User 
         fields = ['username', 'password']
@@ -116,7 +115,7 @@ class RegistrationForm(UserCreationForm):
         if not commit:
             raise NotImplementedError("Must have database save priveleges to create this user.")
         
-        user = User.objects.create_user(username=self.cleaned_data['email'],
+        user = User.objects.create_user(username=self.cleaned_data['username'],
                                         email=self.cleaned_data['email'],
                                         password=self.cleaned_data['password1'],
                                         first_name=self.cleaned_data['first_name'],
@@ -124,7 +123,7 @@ class RegistrationForm(UserCreationForm):
         # Quickly calculate age to pass to Profile.
         today = date.today()
         age = today.year - self.cleaned_data['birthdate'].year - ((today.month, today.day) < (self.cleaned_data['birthdate'].month, self.cleaned_data['birthdate'].day))
-        profile = Profile(user=user, birthday=self.cleaned_data['birthdate'], handle=self.cleaned_data['username'], age=age)
+        profile = Profile(user=user, birthday=self.cleaned_data['birthdate'], age=age)
         profile.save()
 
         return user, profile
