@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError # Used to throw form errors.
 from datetime import date # Used for date comparisons.
 
 # Local Imports
-from my_profile.models import Profile
+from profiles.models import Profile
 
 class LoginForm(AuthenticationForm):
     '''The form that users use to log in to the site.'''
