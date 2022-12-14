@@ -30,50 +30,61 @@
                 <div class="row mt-3">
                     <div class="col">
                         <h4 class="text-center">Hobbies</h4>
-                        {% if hobbies is not None %}
+                        {% if hobbies %}
                             {% for hobby in hobbies %}
-                                <div class="row justify-content-center mb-2">
+                                <div class="row justify-content-center mb-1">
                                     <div class="card text-center w-75 p-0">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ hobby.name }}</h5>
+                                            <h5 class="card-title m-0">{{ hobby.name }}</h5>
                                         </div>
                                     </div>
                                 </div>
                             {% endfor %}
                         {% endif %}
                         <div class="row justify-content-center">
-                            <div class="card w-75 p-0">
+                            <button type="button" class="card btn w-75 p-0" data-bs-toggle="modal" data-bs-target="#hobbyModal">
                                 <div class="card-body text-center">
                                     <img class="card-img-top" src="https://images.squarespace-cdn.com/content/v1/56e19ec5e3214084d69d4b7d/1473524254173-BGV5W2Z5FM46F67SYZHJ/PlusIcon_Small_Gray.png" style="height: 50px; width: 50px;" alt="Add Item">
-                                    <a href="{% url 'profiles:select_hobbies' %}" class="stretched-link"></a>
                                 </div>
-                            </div>
+                            </button>
                         </div>
                     </div>
                     <div class="col">
                         <h4 class="text-center">Interests</h4>
-                        {% if interests is not None %}
+                        {% if interests %}
                             {% for interest in interests %}
-                                <div class="row justify-content-center mb-2">
-                                    <div class="card btn text-center w-75 p-0">
+                                <div class="row justify-content-center mb-1">
+                                    <div class="card text-center w-75 p-0">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ interest.name }}</h5>
+                                            <h5 class="card-title m-0">{{ interest.name }}</h5>
                                         </div>
                                     </div>
                                 </div>
                             {% endfor %}
                         {% endif %}
                         <div class="row justify-content-center">
-                            <div class="card w-75 p-0">
+                            <button type="button" class="card btn w-75 p-0" data-bs-toggle="modal" data-bs-target="#interestModal">
                                 <div class="card-body text-center">
                                     <img class="card-img-top" src="https://images.squarespace-cdn.com/content/v1/56e19ec5e3214084d69d4b7d/1473524254173-BGV5W2Z5FM46F67SYZHJ/PlusIcon_Small_Gray.png" style="height: 50px; width: 50px;" alt="Add Item">
-                                    <a href="{% url 'profiles:select_hobbies' %}" class="stretched-link"></a>
                                 </div>
-                            </div>
+                            </button>
                         </div>
                     </div>
                     <div class="col">
                         <h4 class="text-center">Groups</h4>
+                        {% if groups %}
+                            {% for group in groups %}
+                                <div class="row justify-content-center mb-1">
+                                    <div class="card btn text-center w-75 p-0">
+                                        <div class="card-body">
+                                            <h5 class="card-title m-0">{{ group.name }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center">Looks like there's nothing here yet. Go to the Discover tab to join some groups!</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -86,4 +97,41 @@
         </div>
     </div>
 </form>
+
+<div class="modal fade" id="hobbyModal" tabindex="-1" aria-labelledby="hobbyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5" id="hobbyModalLabel">Before you go...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Leaving this page will discard any other changes you've made to your name, location, and/or bio. Are you sure you want to continue?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                <a type="button" class="btn btn-warning" href="{% url 'profiles:select_hobbies' %}">Continue</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="interestModal" tabindex="-1" aria-labelledby="interestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5" id="hobbyModalLabel">Before you go...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Leaving this page will discard any other changes you've made to your name, location, and/or bio. Are you sure you want to continue?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                <a type="button" class="btn btn-warning" href="{% url 'profiles:select_interests' %}">Continue</a>
+            </div>
+        </div>
+    </div>
+</div>
+  
 {% endblock %}

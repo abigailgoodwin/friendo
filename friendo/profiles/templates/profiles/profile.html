@@ -27,38 +27,51 @@
             <div class="row mt-3">
                 <div class="col">
                     <h4 class="text-center">Hobbies</h4>
-                    {% if hobbies is not None %}
+                    {% if hobbies %}
                         {% for hobby in hobbies %}
-                            <div class="row justify-content-center">
-                                <div class="card btn text-center w-75 p-0">
+                            <div class="row justify-content-center mb-1">
+                                <div class="card text-center w-75 p-0">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ hobby.name }}</h5>
+                                        <h5 class="card-title m-0">{{ hobby.name }}</h5>
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
                     {% else %}
-                        <div class="text-center">Looks like there's nothing here yet.</div>
+                        <div class="text-center">Looks like there's nothing here yet. Edit your profile to add some hobbies.</div>
                     {% endif %}
                 </div>
                 <div class="col">
                     <h4 class="text-center">Interests</h4>
-                    {% if interests is not None %}
+                    {% if interests %}
                         {% for interest in interests %}
-                            <div class="row justify-content-center">
-                                <div class="card btn text-center w-75 p-0">
+                            <div class="row justify-content-center mb-1">
+                                <div class="card text-center w-75 p-0">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ interest.name }}</h5>
+                                        <h5 class="card-title m-0">{{ interest.name }}</h5>
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
                     {% else %}
-                        <div class="text-center">Looks like there's nothing here yet.</div>
+                        <div class="text-center">Looks like there's nothing here yet. Edit your profile to add some interests.</div>
                     {% endif %}
                 </div>
                 <div class="col">
                     <h4 class="text-center">Groups</h4>
+                    {% if groups %}
+                        {% for group in groups %}
+                            <div class="row justify-content-center mb-1">
+                                <div class="card btn text-center w-75 p-0">
+                                    <div class="card-body">
+                                        <h5 class="card-title m-0">{{ group.name }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center">Looks like there's nothing here yet. Go to the Discover tab to join some groups!</div>
+                    {% endif %}
                 </div>
             </div>
         </div>

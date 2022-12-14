@@ -1,0 +1,38 @@
+{% extends 'internal_base.html' %}
+{% block title %}Interests{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row" style="padding: 75px; background-color: grey; color:white;">
+        <h2 class="text-center p-0">Interest Catalog</h2>
+        <p class="text-center">Here is a list of all of the interests available on friendo. Pick as many as you'd like!</p>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <div class="btn-group interest-list mt-3">
+                    {% for interest in all_interests %}
+                        {% if interest in my_interests %}
+                            <span class="m-2">
+                                <input type="checkbox" class="btn-check" id="{{ interest.id }}" name="{{ interest.id }}" checked autocomplete="off">
+                                <label class="btn btn-light btn-lg" for="{{ interest.id }}">{{ interest.name }}</label>
+                            </span>
+                        {% else %}
+                            <span class="m-2">
+                                <input type="checkbox" class="btn-check" id="{{ interest.id }}" name="{{ interest.id }}" autocomplete="off">
+                                <label class="btn btn-light btn-lg" for="{{ interest.id }}">{{ interest.name }}</label>
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="d-flex fixed-bottom justify-content-end m-3">
+            <button type="submit" class="btn btn-primary mt-3" value="Submit">
+                Submit
+                <span class="material-symbols-rounded" style="font-size: 1rem !important;">save</span>
+            </button>
+        </div>
+    </form>    
+</div>
+{% endblock %}
