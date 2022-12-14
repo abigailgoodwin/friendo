@@ -5,6 +5,24 @@ from django.contrib.auth.models import User
 # Python3 Imports
 from datetime import date # Used to calculate the user's age.
 
+class Hobby(models.Model):
+    '''Defines a Hobby model that represents a hobby. Users can have many of these listed.'''
+    name = models.CharField(max_length=200)
+    description = models.TextField(max_length=400)
+    icon = models.ImageField(default='default/placeholder.png', upload_to='hobby_interest_images')
+    
+    def __str__(self):
+        return self.name
+    
+class Interest(models.Model):
+    '''Defines an Interest model that represents an interest that a user can have.'''
+    name = models.CharField(max_length=200)
+    description = models.TextField(max_length=200)
+    icon = models.ImageField(default='default/placeholder.png', upload_to='hobby_interest_images')
+    
+    def __str__(self):
+        return self.name
+
 class Profile(models.Model):
     '''Defines a Profile model that stands in for the User model.
     
@@ -27,9 +45,14 @@ class Profile(models.Model):
     calculateAge : void
         Calculates the user's current age.
     '''
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    profile_image = models.ImageField(default='default/placeholder.png', upload_to='profile_images')
+    location = models.CharField(max_length=200, default='friendo')
+    bio = models.TextField(default="Tell us something about yourself!")
     birthday = models.DateField()
     age = models.PositiveSmallIntegerField()
+    hobbies = models.ManyToManyField(Hobby, related_name='profiles', blank=True)
+    interests = models.ManyToManyField(Interest, related_name='profiles', blank=True)
     first_visit = models.BooleanField(default=True)
     
     def __str__(self):
@@ -43,17 +66,3 @@ class Profile(models.Model):
             self.age = age
             self.save()
             
-
-class Hobby(models.Model):
-    '''Defines a Hobby model that represents a hobby. Users can have many of these listed.'''
-    name = models.CharField(max_length=200)
-    description = models.TextField(max_length=400)
-    icon = models.ImageField(default='default/placeholder.png', upload_to='hobby_interest_images')
-    profiles = models.ManyToManyField(Profile, related_name="hobbies")
-    
-class Interest(models.Model):
-    '''Defines an Interest model that represents an interest that a user can have.'''
-    name = models.CharField(max_length=200)
-    description = models.TextField(max_length=200)
-    icon = models.ImageField(default='default/placeholder.png', upload_to='hobby_interest_images')
-    profiles = models.ManyToManyField(Profile, related_name="interests")

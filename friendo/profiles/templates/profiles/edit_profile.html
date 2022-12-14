@@ -1,0 +1,89 @@
+{% extends 'internal_base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block body %}
+<form method="POST" id="editForm">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row" style="padding: 100px; background-color: grey;">
+        </div>
+        <div class="row">
+            <div class="col-3 ms-3">
+                <div class="row">
+                    <img src="{{ user.profile.profile_image.url }}" class="img-thumbnail mx-auto" style="width: 200px; height: 200px; margin-top: -6.0rem;">
+                </div>
+                <div class="row border-bottom mx-3">
+                    <input type="text" class="form-control-lg my-1 text-center" id="first_name" name="first_name" value="{{ user.first_name }}">
+                    <input type="text" class="form-control-lg my-1 text-center" id="first_name" name="last_name" value="{{ user.last_name }}">
+                    <small class="text-center mb-2">@{{ user.username }}</small>
+                </div>
+                <div class="row px-3">
+                    <div class="d-flex justify-content-center my-2">
+                        <span class="material-symbols-rounded">location_on</span>
+                        <input type="text" class="form-control text-center" id="location" name="location" value="{{ user.profile.location }}">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <textarea class="form-control" id="bio" name="bio" rows="3">{{ user.profile.bio }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row mt-3">
+                    <div class="col">
+                        <h4 class="text-center">Hobbies</h4>
+                        {% if hobbies is not None %}
+                            {% for hobby in hobbies %}
+                                <div class="row justify-content-center mb-2">
+                                    <div class="card text-center w-75 p-0">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ hobby.name }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="row justify-content-center">
+                            <div class="card w-75 p-0">
+                                <div class="card-body text-center">
+                                    <img class="card-img-top" src="https://images.squarespace-cdn.com/content/v1/56e19ec5e3214084d69d4b7d/1473524254173-BGV5W2Z5FM46F67SYZHJ/PlusIcon_Small_Gray.png" style="height: 50px; width: 50px;" alt="Add Item">
+                                    <a href="{% url 'profiles:select_hobbies' %}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h4 class="text-center">Interests</h4>
+                        {% if interests is not None %}
+                            {% for interest in interests %}
+                                <div class="row justify-content-center mb-2">
+                                    <div class="card btn text-center w-75 p-0">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ interest.name }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="row justify-content-center">
+                            <div class="card w-75 p-0">
+                                <div class="card-body text-center">
+                                    <img class="card-img-top" src="https://images.squarespace-cdn.com/content/v1/56e19ec5e3214084d69d4b7d/1473524254173-BGV5W2Z5FM46F67SYZHJ/PlusIcon_Small_Gray.png" style="height: 50px; width: 50px;" alt="Add Item">
+                                    <a href="{% url 'profiles:select_hobbies' %}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h4 class="text-center">Groups</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex fixed-bottom justify-content-end m-3">
+            <button type="submit" form="editForm" class="btn btn-light mt-3" value="Submit">
+                Save
+                <span class="material-symbols-rounded" style="font-size: 1rem !important;">save</span>
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}

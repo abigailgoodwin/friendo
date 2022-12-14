@@ -1,0 +1,38 @@
+{% extends 'internal_base.html' %}
+{% block title %}Hobbies{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row" style="padding: 75px; background-color: grey; color:white;">
+        <h2 class="text-center p-0">Hobby Catalog</h2>
+        <p class="text-center">Here is a list of all of the wonderful hobbies available on friendo. Pick as many as you'd like!</p>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <div class="btn-group hobby-list mt-3">
+                    {% for hobby in all_hobbies %}
+                        {% if hobby in my_hobbies %}
+                            <span class="m-2">
+                                <input type="checkbox" class="btn-check" id="{{ hobby.id }}" name="{{ hobby.id }}" checked autocomplete="off">
+                                <label class="btn btn-light btn-lg" for="{{ hobby.id }}">{{ hobby.name }}</label>
+                            </span>
+                        {% else %}
+                            <span class="m-2">
+                                <input type="checkbox" class="btn-check" id="{{ hobby.id }}" name="{{ hobby.id }}" autocomplete="off">
+                                <label class="btn btn-light btn-lg" for="{{ hobby.id }}">{{ hobby.name }}</label>
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="d-flex fixed-bottom justify-content-end m-3">
+            <button type="submit" class="btn btn-primary mt-3" value="Submit">
+                Submit
+                <span class="material-symbols-rounded" style="font-size: 1rem !important;">save</span>
+            </button>
+        </div>
+    </form>    
+</div>
+{% endblock %}
