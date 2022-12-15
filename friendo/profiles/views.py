@@ -20,13 +20,26 @@ def my_profile(request):
     context['interests'] = my_interests
     return render(request=request, template_name='profiles/my_profile.html', context=context)
 
+@login_required
 def profile(request, profileID):
     '''Displays another user's profile.'''
     context = {}
     profile = Profile.objects.get(id=profileID)
     hobbies = profile.hobbies.all()
     interests = profile.interests.all()
+    following = True if profile in request.user.profile.following.all() else False
+    
+    if request.method == 'POST':
+        # User is attempting to follow or unfollow this person.
+        if following:
+            request.user.profile.following.remove(profile)
+            following = False
+        else:
+            request.user.profile.following.add(profile)
+            following = True
+            
     context['profile'] = profile
+    context['following'] = following
     context['hobbies'] = hobbies
     context['interests'] = interests
     return render(request=request, template_name='profiles/profile.html', context=context)

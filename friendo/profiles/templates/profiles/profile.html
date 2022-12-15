@@ -29,10 +29,24 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="row- px-3 mx-3 pt-2">
+            <div class="row mx-3 pt-2">
                 <div class="d-flex justify-content-center">
                     {{ profile.bio }}
                 </div>
+            </div>
+            <div class="row text-center mx-3 pt-2">
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-light mt-3 w-50" value="Submit">
+                        {% if following %}
+                            Unfollow
+                            <span class="material-symbols-rounded" style="font-size: 1rem !important;">remove</span>
+                        {% else %}
+                            Follow
+                            <span class="material-symbols-rounded" style="font-size: 1rem !important;">add</span>
+                        {% endif %}
+                    </button>
+                </form>
             </div>
         </div>
         <div class="col">
