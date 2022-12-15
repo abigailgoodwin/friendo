@@ -132,6 +132,3 @@ dmypy.json
 
 # pycharm
 /.idea/
-
-# ignore any locally stored photos
-/media/
