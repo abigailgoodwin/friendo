@@ -51,8 +51,11 @@ class Profile(models.Model):
     bio = models.TextField(default="Tell us something about yourself!")
     birthday = models.DateField()
     age = models.PositiveSmallIntegerField()
+    gender = models.CharField(max_length=50, blank=True)
+    seeking_romance = models.BooleanField(default=False)
     hobbies = models.ManyToManyField(Hobby, related_name='profiles', blank=True)
     interests = models.ManyToManyField(Interest, related_name='profiles', blank=True)
+    friends = models.ManyToManyField("self", related_name='friends', blank=True)
     first_visit = models.BooleanField(default=True)
     
     def __str__(self):

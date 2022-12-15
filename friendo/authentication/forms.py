@@ -40,6 +40,9 @@ class RegistrationForm(UserCreationForm):
         A field that takes in the user's last name.
     birthdate : DateField
         A field that stores the user's birthdate. Must be 18 or older to sign up.
+    gender: CharField
+        A field that store's the user's declared gender.
+    seeking_romance : 
     '''
     email = forms.EmailField(required=True,
                              label="E-Mail",
@@ -70,6 +73,19 @@ class RegistrationForm(UserCreationForm):
     birthdate = forms.DateField(required=True,
                                 label="Birth Date",
                                 widget=forms.NumberInput(attrs={'type': 'date', 'id': 'birthdate'}))
+    gender_choices = (('Female', 'Female'),
+                      ('Male', 'Male'),
+                      ('Non-Binary', 'Non-Binary'),
+                      ('Gender-Fluid', 'Gender-Fluid'),
+                      ('Transgender', 'Transgender'),
+                      (None, 'Other/Rather Not Say'))
+    gender = forms.ChoiceField(required=True,
+                               label="Gender Identity",
+                               widget=forms.Select(attrs={'id': 'gender'}),
+                               choices=gender_choices)
+    seeking_romance = forms.NullBooleanField(required=True,
+                                             label="Are you seeking romance?")
+    
     
     def __init__(self, *args, **kwargs):
         '''Adds Django widgets to the hidden password1 and password2 fields, and a form-control class to everything.'''
@@ -123,11 +139,15 @@ class RegistrationForm(UserCreationForm):
         # Quickly calculate age to pass to Profile.
         today = date.today()
         age = today.year - self.cleaned_data['birthdate'].year - ((today.month, today.day) < (self.cleaned_data['birthdate'].month, self.cleaned_data['birthdate'].day))
-        profile = Profile(user=user, birthday=self.cleaned_data['birthdate'], age=age)
+        profile = Profile(user=user,
+                          birthday=self.cleaned_data['birthdate'],
+                          age=age,
+                          gender=self.cleaned_data['gender'],
+                          seeking_romance=self.cleaned_data['seeking_romance'])
         profile.save()
 
         return user, profile
     
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'birthdate']
+        fields = ['username', 'email', 'first_name', 'last_name', 'birthdate', 'gender', 'seeking_romance']

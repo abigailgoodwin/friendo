@@ -2,7 +2,32 @@
 {% block title %}Discover{% endblock %}
 {% block body %}
 <div class="container-fluid">
-    <div class="row" style="padding: 100px; background-color: grey;">
+    <div class="row" style="padding: 75px; background-color: grey; color:white;">
+        <h2 class="text-center p-0">Discover</h2>
+        <p class="text-center">Discover people just like you and make connections that can last a lifetime.</p>
+    </div>
+    <!-- Discover Start -->
+    <div class="row align-items-center justify-content-center mt-3">
+        <div class="col-5">
+            <div class="discover-card card text-center">
+                <img src="/media/default/friend.jpg" style="object-position: 50% 25%;" class="card-img-top" alt="Two happy friends hugging each other.">
+                <div class="card-body">
+                    <h2 class="card-title">Discover Friends</h2>
+                    <p class="card-text">I'm looking for a one-to-one connection.</p>
+                    <a href="{% url 'discover:discover_friends' %}" class="btn btn-primary w-75">Start</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="discover-card card text-center">
+                <img src="/media/default/friend_grp.jpg" style="object-position: 50% 75%;" class="card-img-top" alt="A group of friends adventuring in a rocky wilderness.">
+                <div class="card-body">
+                    <h2 class="card-title">Discover Groups</h2>
+                    <p class="card-text">I'm looking to join a group of like-minded individuals.</p>
+                    <a href="#" class="btn btn-primary w-75">Start</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

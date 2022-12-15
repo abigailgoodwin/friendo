@@ -8,3 +8,17 @@
 {
     flex-wrap: wrap !important;
 }
+
+.discover-card img 
+{
+    height: 300px;
+    object-fit: cover;
+}
+
+.site-banner
+{
+    background-image: url('/media/default/blob-scene.svg');
+    background-position: left;
+    background-size: cover;
+    color: white;
+}

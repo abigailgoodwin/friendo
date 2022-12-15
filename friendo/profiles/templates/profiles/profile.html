@@ -11,13 +11,25 @@
             </div>
             <div class="row border-bottom mx-3">
                 <h4 class="text-center mt-2 mb-0">{{ user.first_name }} {{ user.last_name }}</h4>
-                <small class="text-center mb-2">@{{ user.username }}</small>
+                <small class="text-center">@{{ user.username }}</small>
+                <small class="text-center mb-2">{{ user.profile.gender }}, {{ user.profile.age }}</small>
             </div>
-            <div class="row px-3 mx-3">
-                <div class="d-flex justify-content-center my-2">
+            <div class="row px-3 mx-3 pb-1 border-bottom">
+                <div class="d-flex justify-content-center mt-2">
                     <span class="material-symbols-rounded">location_on</span>
                     <span class="my-auto">{{ user.profile.location }}</span>
                 </div>
+                <div class="d-flex justify-content-center">
+                    {% if user.profile.seeking_romance is True %}
+                        <span class="material-symbols-rounded">favorite</span>
+                        <span class="my-auto">Looking for Romance</span>
+                    {% else %}
+                        <span class="material-symbols-rounded">mood</span>
+                        <span class="my-auto">Looking for Friends</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row- px-3 mx-3 pt-2">
                 <div class="d-flex justify-content-center">
                     {{ user.profile.bio }}
                 </div>
