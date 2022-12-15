@@ -12,35 +12,35 @@
         <div class="col-4">
             <div class="row text-center border-bottom mx-3">
                 <h3 class="text-center">Filters</h3>
-                <small class="mb-3">These filters can help find the friends that best fit you.</small>
+                <small class="mb-3">These filters can help you find the friends that best fit you.</small>
             </div>
             <div class="row mt-3">
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-check form-switch d-flex justify-content-center mb-3">
-                        <input class="form-check-input me-3" type="checkbox" role="switch" id="seeking_romance" name="seeking_romance">
-                        <label class="form-check-label" for="seeking_romance">Include People Seeking Romance</label>
+                        <input class="form-check-input me-3" {% if filter.filter_romance is True %}checked{% endif %} type="checkbox" role="switch" id="seeking_romance" name="seeking_romance">
+                        <label class="form-check-label" for="seeking_romance">Filter Out People Seeking Romance</label>
                     </div>
                     <div class="form-check form-switch d-flex justify-content-center mb-3">
-                        <input class="form-check-input me-3" type="checkbox" role="switch" id="location_on" name="location_on">
+                        <input class="form-check-input me-3" {% if filter.location_on %}checked{% endif %} type="checkbox" role="switch" id="location_on" name="location_on">
                         <label class="form-check-label" for="location_on">Find People Near Me</label>
                     </div>
                     <div class="d-flex justify-content-center align-content-center mb-3">
                         <label class="form-check-label me-3" for="gender">Preferred Gender</label>
                         <select class="form-select form-select-sm w-50" id="gender" name="gender" aria-label="Preferred Gender">
-                            <option selected value="None">None</option>
-                            <option value="Female">Female</option>
-                            <option value="Male">Male</option>
-                            <option value="Transgender">Transgender</option>
-                            <option value="Non-Binary">Non-Binary</option>
-                            <option value="Gender-Fluid">Gender-Fluid</option>
+                            <option {% if filter is None or filter.preferred_gender is None %}selected{% endif %} value="None">None</option>
+                            <option {% if filter.preferred_gender == "Female" %}selected{% endif %} value="Female">Female</option>
+                            <option {% if filter.preferred_gender == "Male" %}selected{% endif %} value="Male">Male</option>
+                            <option {% if filter.preferred_gender == "Transgender" %}selected{% endif %} value="Transgender">Transgender</option>
+                            <option {% if filter.preferred_gender == "Non-Binary" %}selected{% endif %} value="Non-Binary">Non-Binary</option>
+                            <option {% if filter.preferred_gender == "Gender-Fluid" %}selected{% endif %} value="Gender-Fluid">Gender-Fluid</option>
                         </select>
                     </div>
                     <div class="d-flex justify-content-center align-content-center mb-3">
                         <label class="form-check-label me-3" for="min_age">Preferred Age</label>
-                        <input class="form-control form-control-sm w-25 text-center" name="min_age" type="text" placeholder="{{ user.profile.age }}" aria-label="Preferred Minimum Age">
+                        <input class="form-control form-control-sm w-25 text-center" value="{% if filter.min_age is not None %}{{ filter.min_age }}{% endif %}" name="min_age" type="text" aria-label="Preferred Minimum Age">
                         <label class="form-check-label mx-3" for="max_age">to</label>
-                        <input class="form-control form-control-sm w-25 text-center" name="max_age" type="text" placeholder="{{ user.profile.age }}" aria-label="Preferred Maximum Age">
+                        <input class="form-control form-control-sm w-25 text-center" value="{% if filter.max_age is not None %}{{ filter.max_age }}{% endif %}" name="max_age" type="text" aria-label="Preferred Maximum Age">
                     </div>
                     <div class="d-flex justify-content-center align-content-center my-3">
                         <button type="submit" class="btn btn-primary w-50 m-3">Search</button>
@@ -49,9 +49,26 @@
             </div> 
         </div>
         <div class="col discover-friend-results">
-            {% if results %}
+            {% if results is not None %}
+                {% if results %}
+                    <div class="row row-cols-4">
+                        {% for result in results %}
+                            <div class="card discover-friend-result-card m-1" style="width: 13rem;">
+                                <img src="{{ result.0.profile_image.url }}" class="card-img-top" alt="The profile image of {{ result.0.user.first_name }}">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">{{ result.0.user.first_name }} {{ result.0.user.last_name }}</h5>
+                                    <small>Match Score:</small>
+                                    <p class="display-6 card-text">{{ result.1 }}%</p>
+                                    <a href="{% url 'profiles:profile' result.0.id %}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>    
+                {% else %}
+                    <p>It looks like your search didn't yield any results.</p>
+                {% endif %}
             {% else %}
-                <p>Tell us a little bit about what kind of people you're interested in and then hit FIND.</p>
+                <p class="text-center" style="color: grey;">Use the filter on the left to tell us a little about the friends that you're looking for.</p>
             {% endif %}
         </div>
     </div>

@@ -68,4 +68,3 @@ class Profile(models.Model):
         if age != self.age:
             self.age = age
             self.save()
-            

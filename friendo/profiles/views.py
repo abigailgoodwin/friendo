@@ -18,6 +18,17 @@ def my_profile(request):
     my_interests = my_profile.interests.all()
     context['hobbies'] = my_hobbies
     context['interests'] = my_interests
+    return render(request=request, template_name='profiles/my_profile.html', context=context)
+
+def profile(request, profileID):
+    '''Displays another user's profile.'''
+    context = {}
+    profile = Profile.objects.get(id=profileID)
+    hobbies = profile.hobbies.all()
+    interests = profile.interests.all()
+    context['profile'] = profile
+    context['hobbies'] = hobbies
+    context['interests'] = interests
     return render(request=request, template_name='profiles/profile.html', context=context)
 
 @login_required
