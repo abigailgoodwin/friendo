@@ -9,7 +9,9 @@
         <div class="row">
             <div class="col-3 ms-3">
                 <div class="row">
-                    <img src="{{ user.profile.profile_image.url }}" class="img-thumbnail mx-auto" style="width: 200px; height: 200px; margin-top: -6.0rem;">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#pictureModal">
+                        <img src="{{ user.profile.profile_image.url }}" class="img-thumbnail mx-auto profile-img">
+                    </button>
                 </div>
                 <div class="row border-bottom mx-3">
                     <input type="text" class="form-control-lg my-1 text-center" id="first_name" name="first_name" value="{{ user.first_name }}">
@@ -97,6 +99,32 @@
         </div>
     </div>
 </form>
+
+<div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5" id="pictureModalLabel">Change Profile Picture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="changePhoto" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3 form-group">
+                        {% for field in form %}
+                            <label for="formFile" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" form="changePhoto" name="pictureChange">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="hobbyModal" tabindex="-1" aria-labelledby="hobbyModalLabel" aria-hidden="true">
     <div class="modal-dialog">

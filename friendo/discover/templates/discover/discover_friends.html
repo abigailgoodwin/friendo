@@ -54,7 +54,7 @@
                     <div class="row row-cols-4">
                         {% for result in results %}
                             <div class="card discover-friend-result-card m-1" style="width: 13rem;">
-                                <img src="{{ result.0.profile_image.url }}" class="card-img-top" alt="The profile image of {{ result.0.user.first_name }}">
+                                <img src="{{ result.0.profile_image.url }}" class="card-img-top discover-profile-img img-thumbnail" alt="The profile image of {{ result.0.user.first_name }}">
                                 <div class="card-body text-center">
                                     <h5 class="card-title">{{ result.0.user.first_name }} {{ result.0.user.last_name }}</h5>
                                     <small>Match Score:</small>

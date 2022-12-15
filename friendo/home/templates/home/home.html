@@ -1,5 +1,38 @@
 {% extends 'internal_base.html' %}
 {% block title %}Home{% endblock %}
 {% block body %}
+<div class="container-fluid">
+    <div class="row site-banner text-center" style="padding: 75px;">
+        {% if not user.profile.first_visit %}
+            <h4>Nice to see you again, {{ user.first_name }}!</h4>
+            <small>Let's get out there and connect with someone!</small>
+        {% else %}
+            <h4>Welcome to friendo, {{ user.first_name }}!</h4>
+        {% endif %}
+    </div>
+    <div class="row mt-3">
+        <div class="col-3">
+            <div class="row">
+                <img src="{{ user.profile.profile_image.url }}" class="img-thumbnail my-home-img rounded-circle mx-auto">
+            </div>
+            <div class="row text-center border-bottom mx-3 pb-3">
+                <h4 class="text-center mt-2 mb-0">{{ profile.user.first_name }} {{ profile.user.last_name }}</h4>
+                <small class="text-center">@{{ user.profile.user.username }}</small>
+            </div>
+            <div class="row text-center">
+                <div class="d-flex justify-content-center">
+                    <span class="material-symbols-rounded me-3">mood</span>
+                    <span class="my-auto">Friends: {{ num_friends }}</span>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <span class="material-symbols-rounded me-3">group</span>
+                    <span class="my-auto">Followers: {{ num_followers }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col">
 
+        </div>
+    </div>
+</div>
 {% endblock %}

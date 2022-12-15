@@ -7,6 +7,7 @@ import operator # For itemgetter mapping.
 
 # Local Imports
 from profiles.models import Hobby, Interest, Profile
+from profiles.forms import UpdateProfileImageForm
 
 @login_required
 def my_profile(request):
@@ -49,26 +50,36 @@ def edit_profile(request):
     '''The view that puts the user into edit mode on their profile.'''
     context = {}
     my_profile = Profile.objects.get(user=request.user)
+    update_photo_form = UpdateProfileImageForm()
+    
     if request.method == 'POST':
-        # User is attempting to update their profile.
-        new_first_name = request.POST.get('first_name', my_profile.user.first_name)
-        new_last_name = request.POST.get('last_name', my_profile.user.last_name)
-        new_location = request.POST.get('location', my_profile.location)
-        new_bio = request.POST.get('bio', my_profile.bio)
-        
-        my_profile.user.first_name = new_first_name
-        my_profile.user.last_name = new_last_name
-        my_profile.user.save()
-        my_profile.location = new_location
-        my_profile.bio = new_bio
-        my_profile.save()
-        
-        return redirect('profiles:my_profile')
+        # Check if user is changing their profile picture.
+        if 'pictureChange' in request.POST:
+            update_photo_form = UpdateProfileImageForm(request.POST, request.FILES, instance=my_profile)
+            if update_photo_form.is_valid():
+                update_photo_form.save()
+                my_profile.save()
+            return redirect('profiles:edit')
+        else:
+            # User is attempting to update their profile.
+            new_first_name = request.POST.get('first_name', my_profile.user.first_name)
+            new_last_name = request.POST.get('last_name', my_profile.user.last_name)
+            new_location = request.POST.get('location', my_profile.location)
+            new_bio = request.POST.get('bio', my_profile.bio)
+            
+            my_profile.user.first_name = new_first_name
+            my_profile.user.last_name = new_last_name
+            my_profile.user.save()
+            my_profile.location = new_location
+            my_profile.bio = new_bio
+            my_profile.save()
+            return redirect('profiles:my_profile')
     
     my_hobbies = my_profile.hobbies.all()
     my_interests = my_profile.interests.all()
     context['hobbies'] = my_hobbies
     context['interests'] = my_interests
+    context['form'] = update_photo_form
     return render(request=request, template_name='profiles/edit_profile.html', context=context)
     
 @login_required

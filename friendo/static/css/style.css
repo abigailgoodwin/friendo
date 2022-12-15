@@ -1,3 +1,9 @@
+.friendo-brand
+{
+    color: #F88619 !important;
+    font-weight: bold;
+}
+
 .material-symbols-rounded
 {
     font-size: 2.2rem !important;
@@ -13,6 +19,31 @@
 {
     height: 300px;
     object-fit: cover;
+}
+
+.profile-img
+{
+    width: 200px;
+    height: 200px;
+    margin-top: -6.0rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+.discover-profile-img
+{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.my-home-img
+{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .site-banner
