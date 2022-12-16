@@ -14,6 +14,7 @@ def discover_home(request):
     '''The landing page of the Discover part of friendo.'''
     return render(request=request, template_name='discover/discover_home.html')
 
+@login_required
 def discover_friends(request):
     '''This is the starting page of the Discover Friends feature.'''
     context = {}
