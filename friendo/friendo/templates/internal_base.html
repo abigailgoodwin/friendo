@@ -51,8 +51,9 @@
 <body>
     {% block body %}
     {% endblock %}
+    <script src="{% static 'js/activepage.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     {% block scripts %}
     {% endblock %}
-    <script src="{% static 'js/activepage.js' %}"></script>
 </body>
 </html>

@@ -56,7 +56,7 @@ class Profile(models.Model):
     hobbies = models.ManyToManyField(Hobby, related_name='profiles', blank=True)
     interests = models.ManyToManyField(Interest, related_name='profiles', blank=True)
     friends = models.ManyToManyField("self", related_name='friends', blank=True)
-    following = models.ManyToManyField("self", related_name="followers", blank=True)
+    following = models.ManyToManyField("self", related_name='followers', blank=True)
     first_visit = models.BooleanField(default=True)
     
     def __str__(self):

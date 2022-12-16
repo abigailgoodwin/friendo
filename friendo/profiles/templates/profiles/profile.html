@@ -16,15 +16,15 @@
             </div>
             <div class="row px-3 mx-3 pb-1 border-bottom">
                 <div class="d-flex justify-content-center mt-2">
-                    <span class="material-symbols-rounded">location_on</span>
+                    <span class="material-symbols-rounded home-symbol me-1">location_on</span>
                     <span class="my-auto">{{ profile.location }}</span>
                 </div>
                 <div class="d-flex justify-content-center">
                     {% if profile.seeking_romance is True %}
-                        <span class="material-symbols-rounded">favorite</span>
+                        <span class="material-symbols-rounded home-symbol me-1">favorite</span>
                         <span class="my-auto">Looking for Romance</span>
                     {% else %}
-                        <span class="material-symbols-rounded">mood</span>
+                        <span class="material-symbols-rounded home-symbol me-1">mood</span>
                         <span class="my-auto">Looking for Friends</span>
                     {% endif %}
                 </div>

@@ -75,6 +75,9 @@ def edit_profile(request):
             my_profile.save()
             return redirect('profiles:my_profile')
     
+    # If this is the user's first time editing their profile, get rid of their first_visit flag.
+    my_profile.first_visit = False
+    my_profile.save()
     my_hobbies = my_profile.hobbies.all()
     my_interests = my_profile.interests.all()
     context['hobbies'] = my_hobbies

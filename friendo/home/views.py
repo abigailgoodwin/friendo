@@ -9,7 +9,8 @@ from profiles.models import Profile
 def home(request):
     '''This view corresponds to the home/landing page, which includes the user's feed.'''
     context = {}
-    followers = request.user.profile.followers.all()
+    my_profile = request.user.profile
+    followers = Profile.objects.filter(following__id=my_profile.id)
     num_followers = len(followers)
     friend_list = request.user.profile.friends.all()
     num_friends = len(friend_list)
